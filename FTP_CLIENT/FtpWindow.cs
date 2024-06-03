@@ -1,13 +1,14 @@
 using FluentFTP;
 using System;
 using System.Security.Authentication;
+using static System.Net.WebRequestMethods;
 
 namespace FTP_CLIENT
 {
-    public partial class Form1 : Form
+    public partial class FtpWindow : Form
     {
         Ftp connection;
-        public Form1()
+        public FtpWindow()
         {
             InitializeComponent();
         }
@@ -101,6 +102,13 @@ namespace FTP_CLIENT
 
             }
 
+        }
+
+        private void upButton_Click(Object sender, EventArgs e)
+        {
+            connection.uploadFile(connection.getClient().GetWorkingDirectory(), console);
+            treeView1.Nodes.Clear();
+            connection.getDirectories(treeView1);
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)

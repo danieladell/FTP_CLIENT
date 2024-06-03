@@ -69,6 +69,36 @@ namespace FTP_CLIENT
             return sortItems(client.GetListing(path));
         }
 
+        public void uploadFile(string path, TextBox console)
+        {
+            var filePath = string.Empty;
+            if (client != null)
+            {
+                if (isAuthenticated() && isConnected())
+                {
+                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                    {
+                        openFileDialog.InitialDirectory = "c:\\";
+                        openFileDialog.Filter = "All files (*.*)|*.*";
+                        openFileDialog.FilterIndex = 2;
+                        openFileDialog.RestoreDirectory = true;
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            //Get the path of specified file
+                            filePath = openFileDialog.FileName;
+                            client.UploadFile(filePath, path + openFileDialog.SafeFileName);
+                            console.Text += Ftp.getTime(DateTime.Now) + " File uploaded.\r\n";
+
+                        }
+                        else
+                        {
+                            console.Text += Ftp.getTime(DateTime.Now) + " File upload error.\r\n";
+                        }
+                    }
+                }
+            }
+        }
 
         public FtpListItem[] sortItems(FtpListItem[] items)
         {

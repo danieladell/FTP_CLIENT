@@ -1,6 +1,6 @@
 ﻿namespace FTP_CLIENT
 {
-    partial class Form1
+    partial class FtpWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FtpWindow));
             label1 = new Label();
             textBox1 = new TextBox();
             label2 = new Label();
@@ -42,8 +42,8 @@
             console = new TextBox();
             treeView1 = new TreeView();
             imageList1 = new ImageList(components);
-            label5 = new Label();
-            button2 = new Button();
+            pathLabel = new Label();
+            upButton = new Button();
             button3 = new Button();
             button4 = new Button();
             label6 = new Label();
@@ -162,24 +162,25 @@
             imageList1.Images.SetKeyName(0, "directory.jpg");
             imageList1.Images.SetKeyName(1, "file.png");
             // 
-            // label5
+            // pathLabel
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(12, 509);
-            label5.Name = "label5";
-            label5.Size = new Size(38, 15);
-            label5.TabIndex = 11;
-            label5.Text = "PATH:";
-            label5.Click += label5_Click;
+            pathLabel.AutoSize = true;
+            pathLabel.Location = new Point(12, 509);
+            pathLabel.Name = "pathLabel";
+            pathLabel.Size = new Size(38, 15);
+            pathLabel.TabIndex = 11;
+            pathLabel.Text = "PATH:";
+            pathLabel.Click += label5_Click;
             // 
-            // button2
+            // upButton
             // 
-            button2.Location = new Point(12, 63);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 23);
-            button2.TabIndex = 12;
-            button2.Text = "Upload...";
-            button2.UseVisualStyleBackColor = true;
+            upButton.Location = new Point(12, 63);
+            upButton.Name = "upButton";
+            upButton.Size = new Size(94, 23);
+            upButton.TabIndex = 12;
+            upButton.Text = "Upload...";
+            upButton.UseVisualStyleBackColor = true;
+            upButton.Click += upButton_Click;
             // 
             // button3
             // 
@@ -228,7 +229,7 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // Form1
+            // FtpWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -238,8 +239,8 @@
             Controls.Add(label6);
             Controls.Add(button4);
             Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(label5);
+            Controls.Add(upButton);
+            Controls.Add(pathLabel);
             Controls.Add(treeView1);
             Controls.Add(console);
             Controls.Add(conButton);
@@ -255,7 +256,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "Form1";
+            Name = "FtpWindow";
             Text = "FTP Client";
             Load += Form1_Load;
             ResumeLayout(false);
@@ -275,8 +276,8 @@
         private Button conButton;
         private TextBox console;
         private TreeView treeView1;
-        private Label label5;
-        private Button button2;
+        private Label pathLabel;
+        private Button upButton;
         private Button button3;
         private Button button4;
         private Label label6;
