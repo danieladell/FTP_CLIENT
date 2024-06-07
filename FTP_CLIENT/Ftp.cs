@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using FluentFTP;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace FTP_CLIENT
 {
@@ -15,15 +16,7 @@ namespace FTP_CLIENT
         private string username;
         private string password;
         private FtpClient client;
-        
-        public Ftp() 
-        { 
-            serverIp = "127.0.0.1";
-            serverPort = 21;
-            username = "ftps_test";
-            password = "Hola01";
-            client = new FtpClient(serverIp, username, password);
-        }
+
 
         public Ftp(string serverIp, int serverPort, string username, string password)
         {
@@ -31,7 +24,7 @@ namespace FTP_CLIENT
             this.serverPort = serverPort;
             this.username = username;
             this.password = password;
-            client = new FtpClient(serverIp, username, password, serverPort);
+            client = new FtpClient(this.serverIp, this.username, this.password, serverPort);
         }
 
         public void ftpConnect() 
@@ -100,6 +93,31 @@ namespace FTP_CLIENT
             }
         }
 
+        public void downloadFile(string path, TextBox console)
+        {
+            var filePath = string.Empty;
+            if (client != null)
+            {
+                if (isAuthenticated() && isConnected())
+                {
+                    using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                    {
+                        saveFileDialog.InitialDirectory = "c:\\";
+
+
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            //Get the path of specified file
+                            filePath = saveFileDialog.FileName;
+                            client.DownloadFile(filePath, path);
+                            console.Text += Ftp.getTime(DateTime.Now) + " File " + path + " downloaded.\r\n";
+
+                        }
+                    }
+                }
+            }
+        }
+
         public FtpListItem[] sortItems(FtpListItem[] items)
         {
             FtpListItem[] sortItems = new FtpListItem[items.Length];
@@ -124,7 +142,7 @@ namespace FTP_CLIENT
 
            
         }
-
+        /*
         public void getDirectories(TreeView tree)
         {
 
@@ -147,7 +165,61 @@ namespace FTP_CLIENT
                 }
             }
         }
+        */
+        public void getDirectory(TreeView tree, string path)
+        {
+            TreeNode selectedNode = tree.SelectedNode; ;
+            TreeNode node;
 
+            if (tree.Nodes.Count > 0)
+            {
+                if (selectedNode.Nodes.Count <= 0)
+                {
+                    foreach (FtpListItem item in getListItems(path))
+                    {
+                    
+                    
+                        node = new TreeNode(item.Name);
+                        switch (item.Type)
+                        {
+                            case FtpObjectType.Directory:
+                                node.SelectedImageIndex = 0;
+                                node.ImageIndex = 0;
+                                selectedNode.Nodes.Add(node);
+                                break;
+                            case FtpObjectType.File:
+                                node.SelectedImageIndex = 1;
+                                node.ImageIndex = 1;
+                                selectedNode.Nodes.Add(node);
+                                break;
+                        }
+                    }  
+                }
+            }else
+            {
+                foreach (FtpListItem item in getListItems(path))
+                {
+                    node = new TreeNode(item.Name);
+                    switch (item.Type)
+                    {
+                        case FtpObjectType.Directory:
+                            node.SelectedImageIndex = 0;
+                            node.ImageIndex = 0;
+                            tree.Nodes.Add(node);
+                            break;
+                        case FtpObjectType.File:
+                            node.SelectedImageIndex = 1;
+                            node.ImageIndex = 1;
+                            tree.Nodes.Add(node);
+                            break;
+                    }
+                }
+            }
+            
+
+        }
+
+        /*
         public void getSubDirectories(FtpListItem item, TreeNode node)
         {
             if (getListItems(item.FullName).Length > 0)
@@ -178,6 +250,7 @@ namespace FTP_CLIENT
             
             
         }
+        */
 
         public FtpClient getClient()
         {
@@ -193,5 +266,21 @@ namespace FTP_CLIENT
             return time.ToString("HH:mm:ss");
         }
 
+        public void delete(TreeView treeView1, TextBox console)
+        {
+            if(client.IsConnected && client.IsAuthenticated)
+            {
+                if(treeView1.SelectedNode.ImageIndex == 0)
+                {
+                    client.DeleteDirectory(treeView1.SelectedNode.FullPath);
+                }
+                else
+                {
+                    client.DeleteFile(treeView1.SelectedNode.FullPath);
+                }
+            }
+            
+            
+        }
     }
 }

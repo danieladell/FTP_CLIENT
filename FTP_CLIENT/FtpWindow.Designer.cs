@@ -42,10 +42,9 @@
             console = new TextBox();
             treeView1 = new TreeView();
             imageList1 = new ImageList(components);
-            pathLabel = new Label();
             upButton = new Button();
-            button3 = new Button();
-            button4 = new Button();
+            downButton = new Button();
+            delButton = new Button();
             label6 = new Label();
             disButton = new Button();
             button1 = new Button();
@@ -134,21 +133,23 @@
             // 
             console.BackColor = SystemColors.ControlLightLight;
             console.BorderStyle = BorderStyle.None;
-            console.Location = new Point(12, 566);
+            console.Location = new Point(12, 584);
             console.Multiline = true;
             console.Name = "console";
             console.ReadOnly = true;
             console.ScrollBars = ScrollBars.Vertical;
-            console.Size = new Size(610, 162);
+            console.Size = new Size(610, 144);
             console.TabIndex = 9;
             console.TextChanged += textBox5_TextChanged;
             // 
             // treeView1
             // 
+            treeView1.BorderStyle = BorderStyle.FixedSingle;
             treeView1.ImageIndex = 0;
             treeView1.ImageList = imageList1;
             treeView1.Location = new Point(12, 109);
             treeView1.Name = "treeView1";
+            treeView1.PathSeparator = "/";
             treeView1.SelectedImageIndex = 0;
             treeView1.Size = new Size(610, 387);
             treeView1.TabIndex = 10;
@@ -161,16 +162,7 @@
             imageList1.TransparentColor = Color.Transparent;
             imageList1.Images.SetKeyName(0, "directory.jpg");
             imageList1.Images.SetKeyName(1, "file.png");
-            // 
-            // pathLabel
-            // 
-            pathLabel.AutoSize = true;
-            pathLabel.Location = new Point(12, 509);
-            pathLabel.Name = "pathLabel";
-            pathLabel.Size = new Size(38, 15);
-            pathLabel.TabIndex = 11;
-            pathLabel.Text = "PATH:";
-            pathLabel.Click += label5_Click;
+            imageList1.Images.SetKeyName(2, "server.png");
             // 
             // upButton
             // 
@@ -182,28 +174,30 @@
             upButton.UseVisualStyleBackColor = true;
             upButton.Click += upButton_Click;
             // 
-            // button3
+            // downButton
             // 
-            button3.Location = new Point(112, 63);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 23);
-            button3.TabIndex = 13;
-            button3.Text = "Download...";
-            button3.UseVisualStyleBackColor = true;
+            downButton.Location = new Point(112, 63);
+            downButton.Name = "downButton";
+            downButton.Size = new Size(94, 23);
+            downButton.TabIndex = 13;
+            downButton.Text = "Download...";
+            downButton.UseVisualStyleBackColor = true;
+            downButton.Click += downButton_Click;
             // 
-            // button4
+            // delButton
             // 
-            button4.Location = new Point(212, 63);
-            button4.Name = "button4";
-            button4.Size = new Size(94, 23);
-            button4.TabIndex = 14;
-            button4.Text = "Delete...";
-            button4.UseVisualStyleBackColor = true;
+            delButton.Location = new Point(212, 63);
+            delButton.Name = "delButton";
+            delButton.Size = new Size(94, 23);
+            delButton.TabIndex = 14;
+            delButton.Text = "Delete...";
+            delButton.UseVisualStyleBackColor = true;
+            delButton.Click += delButton_Click;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(12, 537);
+            label6.Location = new Point(12, 508);
             label6.Name = "label6";
             label6.Size = new Size(62, 15);
             label6.TabIndex = 15;
@@ -237,10 +231,9 @@
             Controls.Add(button1);
             Controls.Add(disButton);
             Controls.Add(label6);
-            Controls.Add(button4);
-            Controls.Add(button3);
+            Controls.Add(delButton);
+            Controls.Add(downButton);
             Controls.Add(upButton);
-            Controls.Add(pathLabel);
             Controls.Add(treeView1);
             Controls.Add(console);
             Controls.Add(conButton);
@@ -276,10 +269,9 @@
         private Button conButton;
         private TextBox console;
         private TreeView treeView1;
-        private Label pathLabel;
         private Button upButton;
-        private Button button3;
-        private Button button4;
+        private Button downButton;
+        private Button delButton;
         private Label label6;
         private Button disButton;
         private Button button1;
